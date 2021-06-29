@@ -17,9 +17,20 @@ public class JpaMain03 {
 
             Member member = new Member();
             member.setUsername("AAA");
-            member.setRoleType(RoleType.USER);
 
+            Member member2 = new Member();
+            member2.setUsername("BBB");
+
+            Member member3 = new Member();
+            member3.setUsername("CCC");
+
+            System.out.println("===================================");
+            // allocationSize = 50 : call next value for member_seq 에서 50개 땡겨온다
             em.persist(member);
+            em.persist(member2);
+            em.persist(member3);
+
+            System.out.println("===================================");
 
             tx.commit(); // 실질적으로 persist 쿼리가 날아감
         } catch (Exception e) {
