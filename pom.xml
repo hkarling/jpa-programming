@@ -13,6 +13,7 @@
         <module>02-persistence-context</module>
         <module>03-entity-mapping</module>
         <module>00-jpa-shop</module>
+        <module>04-releation-mapping-basic</module>
     </modules>
 
     <properties>
