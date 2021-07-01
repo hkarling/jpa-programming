@@ -12,6 +12,7 @@
         <module>01-starting-jpa</module>
         <module>02-persistence-context</module>
         <module>03-entity-mapping</module>
+        <module>00-jpa-shop</module>
     </modules>
 
     <properties>
