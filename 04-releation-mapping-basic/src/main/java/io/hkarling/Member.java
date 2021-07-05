@@ -16,7 +16,6 @@ public class Member {
 
     @Column(name = "USERNAME")
     private String username;
-    private Integer age;
 
 //    @Column(name = "TEAM_ID")
 //    private Long teamId;
@@ -41,19 +40,16 @@ public class Member {
         this.username = username;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public Team getTeam() {
         return team;
     }
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public void assignTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
     }
 }
