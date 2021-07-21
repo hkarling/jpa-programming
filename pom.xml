@@ -16,6 +16,7 @@
         <module>04-releation-mapping-basic</module>
         <module>05-various-relations</module>
         <module>06-advanced-mapping</module>
+        <module>07-proxy-management</module>
     </modules>
 
     <properties>
