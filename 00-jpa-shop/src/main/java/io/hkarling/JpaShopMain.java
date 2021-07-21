@@ -1,5 +1,8 @@
 package io.hkarling;
 
+import io.hkarling.domain.Order;
+import io.hkarling.domain.OrderItem;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -13,6 +16,10 @@ public class JpaShopMain {
         tx.begin();
 
         try {
+
+            Order order = new Order();
+            order.addOrderItem(new OrderItem());
+
 
             tx.commit(); // 실질적으로 persist 쿼리가 날아감
         } catch (Exception e) {

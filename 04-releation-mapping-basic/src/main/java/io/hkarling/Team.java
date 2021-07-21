@@ -38,4 +38,14 @@ public class Team {
     public void setMembers(List<Member> members) {
         this.members = members;
     }
+
+    // 오류난다. 무한루프
+    /*@Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", members=" + members +
+                '}';
+    }*/
 }
