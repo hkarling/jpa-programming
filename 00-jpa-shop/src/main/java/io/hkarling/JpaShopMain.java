@@ -1,5 +1,6 @@
 package io.hkarling;
 
+import io.hkarling.domain.Book;
 import io.hkarling.domain.Order;
 import io.hkarling.domain.OrderItem;
 
@@ -16,6 +17,11 @@ public class JpaShopMain {
         tx.begin();
 
         try {
+
+            Book book = new Book();
+            book.setName("BOOK01");
+            book.setAuthor("Author01");
+            em.persist(book);
 
             tx.commit(); // 실질적으로 persist 쿼리가 날아감
         } catch (Exception e) {
