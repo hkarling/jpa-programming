@@ -17,10 +17,6 @@ public class JpaShopMain {
 
         try {
 
-            Order order = new Order();
-            order.addOrderItem(new OrderItem());
-
-
             tx.commit(); // 실질적으로 persist 쿼리가 날아감
         } catch (Exception e) {
             e.printStackTrace();
