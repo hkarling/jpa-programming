@@ -15,6 +15,7 @@
         <module>00-jpa-shop</module>
         <module>04-releation-mapping-basic</module>
         <module>05-various-relations</module>
+        <module>06-advanced-mapping</module>
     </modules>
 
     <properties>
