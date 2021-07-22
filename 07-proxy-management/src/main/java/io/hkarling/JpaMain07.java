@@ -1,13 +1,11 @@
-package hkarling;
+package io.hkarling;
 
 import org.hibernate.Hibernate;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import java.util.List;
 
-public class JpaMain06 {
+public class JpaMain07 {
 
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
@@ -109,19 +107,103 @@ public class JpaMain06 {
 
             /* 프록시의 초기화는 영속성 컨텍스트 관리 하에서 가능하다. org.hibernate.LazyInitializationException */
 
-            Member member1 = new Member();
-            member1.setUsername("MEMBER1");
-            em.persist(member1);
+//            Member member1 = new Member();
+//            member1.setUsername("MEMBER1");
+//            em.persist(member1);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Member refMember = em.getReference(Member.class, member1.getId());
+//            System.out.println("refMember = " + refMember.getClass()); // Proxy
+//            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
+////            refMember.getUsername(); // 강제 초기화
+//            Hibernate.initialize(refMember); // 강제 초기화
+//            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
+
+//            Team team = new Team();
+//            team.setName("TEAM_A");
+//            em.persist(team);
+//
+//            Member member = new Member();
+//            member.setUsername("MEMBER_A");
+//            member.setTeam(team);
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Member findMember = em.find(Member.class, member.getId());
+//            System.out.println("findMember.getTeam().getClass() = " + findMember.getTeam().getClass());
+//            System.out.println("========================");
+//            findMember.getTeam().getName();
+//            System.out.println("========================");
+
+            /* 가급적이면 실무에서는 지연로딩만 사용하기를 권장. 즉시로딩은 JPQL 에서 N+1 문제 발생.
+               @OneToOne, @ManyToOne 기본은 즉시로딩 -> 지연로딩으로 변경
+               @ManyToOne, @ManyToMany 는 기본이 지연로딩 */
+
+//            Team team = new Team();
+//            team.setName("TEAM_A");
+//            em.persist(team);
+//
+//            Team team2 = new Team();
+//            team2.setName("TEAM_B");
+//            em.persist(team2);
+//
+//            Member member = new Member();
+//            member.setUsername("MEMBER_A");
+//            member.setTeam(team);
+//            em.persist(member);
+//
+//            Member member2 = new Member();
+//            member2.setUsername("MEMBER_B");
+//            member2.setTeam(team2);
+//            em.persist(member2);
+//
+//            em.flush();
+//            em.clear();
+//
+////            Member findMember = em.find(Member.class, member.getId());
+////            List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
+//
+//            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class).getResultList();
+
+            /* N+1 문제 해결 : join fetch */
+
+//            Child child1 = new Child();
+//            Child child2 = new Child();
+//            Parent parent = new Parent();
+//
+//            parent.addChild(child1);
+//            parent.addChild(child2);
+//
+////            em.persist(child1);
+////            em.persist(child2);
+//            em.persist(parent);
+
+            /* 1. Child 와 Parent 의 라이프 사이클이 동일할 때, 2. Child 의 소유가 오직 Parent 에게만 존재할 때 */
+
+            Child child1 = new Child();
+            Child child2 = new Child();
+            Parent parent = new Parent();
+
+            parent.addChild(child1);
+            parent.addChild(child2);
+            em.persist(parent);
 
             em.flush();
             em.clear();
 
-            Member refMember = em.getReference(Member.class, member1.getId());
-            System.out.println("refMember = " + refMember.getClass()); // Proxy
-            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
-//            refMember.getUsername(); // 강제 초기화
-            Hibernate.initialize(refMember); // 강제 초기화
-            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
+            Parent findParent = em.find(Parent.class, parent.getId());
+            em.remove(findParent);
+
+            /* 상위 엔티티 삭제 시 하위 엔티티도 삭제 -> 고아 객체 */
+
+            /* CascadeType.ALL + orphanRemoval = true 모두 ON
+               부모 객체를 통해서 자식 객체의 생명주기를 관리한다.
+               DDD : Aggregate Root 개념을 구현할 때 유용 */
+
 
             tx.commit();
         } catch (Exception e) {

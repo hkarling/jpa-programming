@@ -1,4 +1,4 @@
-package hkarling;
+package io.hkarling;
 
 import javax.persistence.*;
 
@@ -12,7 +12,7 @@ public class Member extends BaseEntity {
     @Column(name = "USERNAME")
     private String username;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // Fetch.Lazy : 프록시 객체로 조회
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 

@@ -1,4 +1,4 @@
-package hkarling;
+package io.hkarling;
 
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
