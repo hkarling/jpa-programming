@@ -13,9 +13,9 @@ public class Member extends BaseEntity {
     private Long id;
 
     private String name;
-    private String city;
-    private String street;
-    private String zipcode;
+
+    @Embedded
+    private Address address;
 
     // 잘못된 설계에 가까움.
     @OneToMany(mappedBy = "member")
