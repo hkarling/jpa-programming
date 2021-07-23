@@ -18,6 +18,7 @@
         <module>06-advanced-mapping</module>
         <module>07-proxy-management</module>
         <module>08-value-type</module>
+        <module>09-oql-basic</module>
     </modules>
 
     <properties>
