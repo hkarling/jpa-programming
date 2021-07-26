@@ -19,6 +19,7 @@
         <module>07-proxy-management</module>
         <module>08-value-type</module>
         <module>09-oql-basic</module>
+        <module>10-oql-intermeidate</module>
     </modules>
 
     <properties>
