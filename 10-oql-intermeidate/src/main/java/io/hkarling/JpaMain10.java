@@ -139,14 +139,46 @@ public class JpaMain10 {
             /**
              * Entity 의 직접 사용 -> 기본키 값을 쓴다.
              */
-            //String query = "Select m from Member m where m.id = :memberId";
-            String query = "Select m from Member m where m = :member";
-            Member findMember = em.createQuery(query, Member.class)
-                    //.setParameter("memberId", member1.getId())
-                    .setParameter("member", member1)
-                    .getSingleResult();
-            System.out.println("findMember = " + findMember);
+//            //String query = "Select m from Member m where m.id = :memberId";
+//            String query = "Select m from Member m where m = :member";
+//            Member findMember = em.createQuery(query, Member.class)
+//                    //.setParameter("memberId", member1.getId())
+//                    .setParameter("member", member1)
+//                    .getSingleResult();
+//            System.out.println("findMember = " + findMember);
 
+            /**
+             * NamedQuery : Entity 에 미리 선언해 두는 쿼리
+             * - 정적 쿼리
+             * - 어노테이션, XML에서 정의
+             * - 애플리케이션 로딩 시점에 초기화 후 재사용, !!!검증가능!!!
+             */
+//            List<Member> resultList = em.createNamedQuery("Member.findByUsername", Member.class)
+//                    .setParameter("username", "MEMBER_2")
+//                    .getResultList();
+//
+//            for(Member member: resultList) {
+//                System.out.println("member = " + member);
+//            }
+
+            /**
+             * Bulk process -> SQL 에서의 UPDATE 등...
+             * - 쿼리 한 번으로 여러 테이블의 ROW 변경
+             * - 주의 : 영속성 컨텍스트를 무시하고 데이터베이스에 직접 쿼리
+             *       (1) 벌크 연산을 먼저 실행
+             *       (2) 벌크 연산을 수행 후 영속성 컨텍스트 초기화
+             */
+            Member findMember = em.find(Member.class, member2.getId());
+            System.out.println("findMember = " + findMember);
+            int count = em.createQuery("update Member m set m.age = 20")
+                    //.setParameter("username", "MEMBER_2")
+                    .executeUpdate();
+            System.out.println("count = " + count);
+            System.out.println("findMember = " + findMember + " : 아직 업데이트가 안되어 있음. ");
+
+            em.clear();
+            Member findMember2 = em.find(Member.class, member2.getId());
+            System.out.println("findMember2 = " + findMember2);
 
 
             tx.commit();
